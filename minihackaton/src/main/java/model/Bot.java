@@ -26,6 +26,7 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if(update.hasMessage()){
             if(update.getMessage().hasText()){
+                System.out.println(update.getMessage());
                 if(update.getMessage().getText().equals("Start game")){
                     try {
                         execute(sendInlineKeyBoardMessage(update.getMessage().getChatId()));
@@ -59,24 +60,24 @@ public class Bot extends TelegramLongPollingBot {
         InlineKeyboardButton inlineKeyboardButton7 = new InlineKeyboardButton();
         InlineKeyboardButton inlineKeyboardButton8 = new InlineKeyboardButton();
         InlineKeyboardButton inlineKeyboardButton9 = new InlineKeyboardButton();
-        inlineKeyboardButton1.setText("0");
-        inlineKeyboardButton1.setCallbackData("Button \"Тык\" has been pressed");
-        inlineKeyboardButton2.setText("0");
-        inlineKeyboardButton2.setCallbackData("Button \"Тык2\" has been pressed");
-        inlineKeyboardButton3.setText("X");
-        inlineKeyboardButton3.setCallbackData("Button \"Тык2\" has been pressed");
-        inlineKeyboardButton4.setText("0");
-        inlineKeyboardButton4.setCallbackData("Button \"Тык2\" has been pressed");
-        inlineKeyboardButton5.setText("X");
-        inlineKeyboardButton5.setCallbackData("Button \"Тык2\" has been pressed");
-        inlineKeyboardButton6.setText("X");
-        inlineKeyboardButton6.setCallbackData("Button \"Тык2\" has been pressed");
-        inlineKeyboardButton7.setText("0");
-        inlineKeyboardButton7.setCallbackData("Button \"Тык2\" has been pressed");
-        inlineKeyboardButton8.setText("0");
-        inlineKeyboardButton8.setCallbackData("Button \"Тык2\" has been pressed");
-        inlineKeyboardButton9.setText("0");
-        inlineKeyboardButton9.setCallbackData("Button \"Тык2\" has been pressed");
+        inlineKeyboardButton1.setText(String.format("%s", State.c));
+        inlineKeyboardButton1.setCallbackData("1");
+        inlineKeyboardButton2.setText(String.format("%s", State.c));
+        inlineKeyboardButton2.setCallbackData("2");
+        inlineKeyboardButton3.setText(String.format("%s", State.c));
+        inlineKeyboardButton3.setCallbackData("3");
+        inlineKeyboardButton4.setText(String.format("%s", State.c));
+        inlineKeyboardButton4.setCallbackData("4");
+        inlineKeyboardButton5.setText(String.format("%s", State.c));
+        inlineKeyboardButton5.setCallbackData("5");
+        inlineKeyboardButton6.setText(String.format("%s", State.c));
+        inlineKeyboardButton6.setCallbackData("6");
+        inlineKeyboardButton7.setText(String.format("%s", State.c));
+        inlineKeyboardButton7.setCallbackData("7");
+        inlineKeyboardButton8.setText(String.format("%s", State.c));
+        inlineKeyboardButton8.setCallbackData("8");
+        inlineKeyboardButton9.setText(String.format("%s", State.c));
+        inlineKeyboardButton9.setCallbackData("9");
 
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
