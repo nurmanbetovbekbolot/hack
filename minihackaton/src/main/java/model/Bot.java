@@ -1,4 +1,5 @@
 package model;
+
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -20,46 +21,24 @@ public class Bot extends TelegramLongPollingBot {
     private static final String token = "1141059604:AAHXae2xfpTXkaJZGdirvYAO6WxsWZosrxI";
     private static final String botUserName = "Magistr";
 
+    static List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+    static List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
+    static List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
 
+    static InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+    static InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton3 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton4 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton5 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton6 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton7 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton8 = new InlineKeyboardButton();
+    static InlineKeyboardButton inlineKeyboardButton9 = new InlineKeyboardButton();
+    private Integer buttonRes = 0;
 
-    @Override
-    public void onUpdateReceived(Update update) {
-        if(update.hasMessage()){
-            if(update.getMessage().hasText()){
-                System.out.println(update.getMessage());
-                if(update.getMessage().getText().equals("Start game")){
-                    try {
-                        execute(sendInlineKeyBoardMessage(update.getMessage().getChatId()));
-                    } catch (TelegramApiException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    @Override
-    public String getBotUsername() {
-        return botUserName;
-    }
-
-    @Override
-    public String getBotToken() {
-        return token;
-    }
     public static SendMessage sendInlineKeyBoardMessage(long chatId) {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton3 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton4 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton5 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton6 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton7 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton8 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton9 = new InlineKeyboardButton();
+
         inlineKeyboardButton1.setText(String.format("%s", State.c));
         inlineKeyboardButton1.setCallbackData("1");
         inlineKeyboardButton2.setText(String.format("%s", State.c));
@@ -80,10 +59,6 @@ public class Bot extends TelegramLongPollingBot {
         inlineKeyboardButton9.setCallbackData("9");
 
 
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
-
         keyboardButtonsRow1.add(inlineKeyboardButton1);
         keyboardButtonsRow1.add(inlineKeyboardButton2);
         keyboardButtonsRow1.add(inlineKeyboardButton3);
@@ -103,4 +78,89 @@ public class Bot extends TelegramLongPollingBot {
         inlineKeyboardMarkup.setKeyboard(rowList);
         return new SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup);
     }
+
+
+    @Override
+    public void onUpdateReceived(Update update) {
+        if (update.hasMessage()) {
+            if (update.getMessage().hasText()) {
+                System.out.println(update.getMessage());
+                if (update.getMessage().getText().equals("Start game")) {
+                    try {
+                        execute(sendInlineKeyBoardMessage(update.getMessage().getChatId()));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else if (update.getCallbackQuery().getData() != null) {
+                buttonRes = Integer.parseInt(update.getCallbackQuery().getData());
+            }
+        }
+
+    }
+
+
+    private static void handleMessage(int move) {
+
+        char m;    // holds move type being added
+
+        // if(p1Turn)
+        m = 'X';
+//            else
+//                m = 'O';
+
+        // sets move
+        switch (move) {
+            case 1:
+                keyboardButtonsRow1.get(0).setText(String.format("%s", State.X));
+
+                break;
+            case 2:
+                keyboardButtonsRow1.get(1).setText(String.format("%s", State.X));
+
+                break;
+            case 3:
+                keyboardButtonsRow1.get(2).setText(String.format("%s", State.X));
+
+                break;
+            case 4:
+                keyboardButtonsRow2.get(0).setText(String.format("%s", State.X));
+                break;
+            case 5:
+                keyboardButtonsRow2.get(1).setText(String.format("%s", State.X));
+
+                break;
+            case 6:
+                keyboardButtonsRow2.get(2).setText(String.format("%s", State.X));
+
+                break;
+            case 7:
+                keyboardButtonsRow3.get(0).setText(String.format("%s", State.X));
+
+                break;
+            case 8:
+                keyboardButtonsRow3.get(1).setText(String.format("%s", State.X));
+
+                break;
+            case 9:
+                keyboardButtonsRow3.get(2).setText(String.format("%s", State.X));
+
+                break;
+        }
+        p1Turn ^= true;
+    }
+
+}
+
+
+    @Override
+    public String getBotUsername() {
+        return botUserName;
+    }
+
+    @Override
+    public String getBotToken() {
+        return token;
+    }
+
 }
