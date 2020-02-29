@@ -40,7 +40,7 @@ public class Bot extends TelegramLongPollingBot {
         try {
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
-            log.log(Level.SEVERE, "Exception: ", e.toString());
+          //  log.log(Level.SEVERE, "Exception: ", e.toString());
         }
     }
 
@@ -81,7 +81,7 @@ public class Bot extends TelegramLongPollingBot {
         // Вторая строчка клавиатуры
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         // Добавляем кнопки во вторую строчку клавиатуры
-        keyboardSecondRow.add(new KeyboardButton("Помощь");
+        keyboardSecondRow.add(new KeyboardButton("Помощь"));
 
         // Добавляем все строчки клавиатуры в список
         keyboard.add(keyboardFirstRow);

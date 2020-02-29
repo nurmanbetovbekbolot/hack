@@ -13,7 +13,7 @@ public class App {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
-            telegramBotsApi.registerBot(Bot.getBot());
+            telegramBotsApi.registerBot(new Bot());
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();
         }
