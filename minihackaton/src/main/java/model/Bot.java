@@ -70,6 +70,10 @@ public class Bot extends TelegramLongPollingBot {
         inlineKeyboardButton6.setCallbackData("Button \"Тык2\" has been pressed");
         inlineKeyboardButton7.setText("0");
         inlineKeyboardButton7.setCallbackData("Button \"Тык2\" has been pressed");
+        inlineKeyboardButton8.setText("0");
+        inlineKeyboardButton8.setCallbackData("Button \"Тык2\" has been pressed");
+        inlineKeyboardButton9.setText("0");
+        inlineKeyboardButton9.setCallbackData("Button \"Тык2\" has been pressed");
 
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
@@ -93,6 +97,6 @@ public class Bot extends TelegramLongPollingBot {
         rowList.add(keyboardButtonsRow3);
 
         inlineKeyboardMarkup.setKeyboard(rowList);
-        return new SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup);
+        return new SendMessage().setChatId(chatId).setText("Tic-Tac-Toe").setReplyMarkup(inlineKeyboardMarkup);
     }
 }
