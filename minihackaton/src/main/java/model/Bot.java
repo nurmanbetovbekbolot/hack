@@ -17,6 +17,9 @@ import java.util.List;
 
 
 public class Bot extends TelegramLongPollingBot {
+    private static final String token = "1141059604:AAHXae2xfpTXkaJZGdirvYAO6WxsWZosrxI";
+    private static final String botUserName = "Magistr";
+
 
 
     @Override
@@ -38,12 +41,12 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "Magistr";
+        return botUserName;
     }
 
     @Override
     public String getBotToken() {
-        return "1141059604:AAHXae2xfpTXkaJZGdirvYAO6WxsWZosrxI";
+        return token;
     }
     public static SendMessage sendInlineKeyBoardMessage(long chatId) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -97,6 +100,6 @@ public class Bot extends TelegramLongPollingBot {
         rowList.add(keyboardButtonsRow3);
 
         inlineKeyboardMarkup.setKeyboard(rowList);
-        return new SendMessage().setChatId(chatId).setText("Tic-Tac-Toe").setReplyMarkup(inlineKeyboardMarkup);
+        return new SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup);
     }
 }
