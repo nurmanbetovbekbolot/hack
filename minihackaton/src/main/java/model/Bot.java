@@ -36,6 +36,8 @@ public class Bot extends TelegramLongPollingBot {
     static InlineKeyboardButton inlineKeyboardButton8 = new InlineKeyboardButton();
     static InlineKeyboardButton inlineKeyboardButton9 = new InlineKeyboardButton();
     static List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+    static boolean flag;
+
     private Integer buttonRes = 0;
 
     public static SendMessage sendInlineKeyBoardMessage(long chatId) {
@@ -96,11 +98,10 @@ public class Bot extends TelegramLongPollingBot {
             if (update.getCallbackQuery().getData() != null) {
                 buttonRes = Integer.parseInt(update.getCallbackQuery().getData());
                 try {
-                    execute(handleMessage(buttonRes, update.));
+                    execute(handleMessage(buttonRes, update.getCallbackQuery().getMessage().getChatId()));
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
-
             }
         }
 
@@ -109,55 +110,33 @@ public class Bot extends TelegramLongPollingBot {
 
     private static SendMessage handleMessage(int move, long chatId) {
 
-        char m;    // holds move type being added
+        State m;    // holds move type being added
 
-        // if(p1Turn)
-        m = 'X';
-//            else
-//                m = 'O';
+        if(flag)
+        m = State.X;
+        else
+                m = State.O;
 
         // sets move
         switch (move) {
             case 1:
-                keyboardButtonsRow1.get(0).setText(String.format("%s", State.X));
-
-                break;
             case 2:
-                keyboardButtonsRow1.get(1).setText(String.format("%s", State.X));
-
-                break;
             case 3:
-                keyboardButtonsRow1.get(2).setText(String.format("%s", State.X));
-
+                keyboardButtonsRow1.get(move-1).setText(String.format("%s", m));
                 break;
             case 4:
-                keyboardButtonsRow2.get(0).setText(String.format("%s", State.X));
-                break;
             case 5:
-                keyboardButtonsRow2.get(1).setText(String.format("%s", State.X));
-
-                break;
             case 6:
-                inlineKeyboardButton6 = keyboardButtonsRow2.get(2).setText(String.format("%s", State.X));
-
+                keyboardButtonsRow2.get(move-3-1).setText(String.format("%s", m));
                 break;
             case 7:
-                keyboardButtonsRow3.get(0).setText(String.format("%s", State.X));
-
-                break;
             case 8:
-                keyboardButtonsRow3.get(1).setText(String.format("%s", State.X));
-
-                break;
             case 9:
-                keyboardButtonsRow3.get(2).setText(String.format("%s", State.X));
+                keyboardButtonsRow3.get(move-6-1).setText(String.format("%s", m));
 
                 break;
         }
-        //p1Turn ^= true;
-        keyboardButtonsRow2.add(inlineKeyboardButton6);
-        rowList.add(keyboardButtonsRow2);
-        inlineKeyboardMarkup.setKeyboard(rowList);
+        flag=!flag;
         return new SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup);
     }
 
