@@ -90,9 +90,17 @@ public class Bot extends TelegramLongPollingBot {
                         e.printStackTrace();
                     }
                 }
-            } else if (update.getCallbackQuery().getData() != null) {
+            }
+        }
+        else if (update.hasCallbackQuery()){
+            if (update.getCallbackQuery().getData() != null) {
                 buttonRes = Integer.parseInt(update.getCallbackQuery().getData());
-                handleMessage(buttonRes, update.getMessage().getChatId());
+                try {
+                    execute(handleMessage(buttonRes, update.));
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 
