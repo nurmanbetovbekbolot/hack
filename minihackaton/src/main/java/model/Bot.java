@@ -35,6 +35,7 @@ public class Bot extends TelegramLongPollingBot {
     static InlineKeyboardButton inlineKeyboardButton7 = new InlineKeyboardButton();
     static InlineKeyboardButton inlineKeyboardButton8 = new InlineKeyboardButton();
     static InlineKeyboardButton inlineKeyboardButton9 = new InlineKeyboardButton();
+    static List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
     private Integer buttonRes = 0;
 
     public static SendMessage sendInlineKeyBoardMessage(long chatId) {
@@ -68,9 +69,6 @@ public class Bot extends TelegramLongPollingBot {
         keyboardButtonsRow3.add(inlineKeyboardButton7);
         keyboardButtonsRow3.add(inlineKeyboardButton8);
         keyboardButtonsRow3.add(inlineKeyboardButton9);
-
-        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-
         rowList.add(keyboardButtonsRow1);
         rowList.add(keyboardButtonsRow2);
         rowList.add(keyboardButtonsRow3);
@@ -94,13 +92,14 @@ public class Bot extends TelegramLongPollingBot {
                 }
             } else if (update.getCallbackQuery().getData() != null) {
                 buttonRes = Integer.parseInt(update.getCallbackQuery().getData());
+                handleMessage(buttonRes, update.getMessage().getChatId());
             }
         }
 
     }
 
 
-    private static void handleMessage(int move) {
+    private static SendMessage handleMessage(int move, long chatId) {
 
         char m;    // holds move type being added
 
@@ -131,7 +130,7 @@ public class Bot extends TelegramLongPollingBot {
 
                 break;
             case 6:
-                keyboardButtonsRow2.get(2).setText(String.format("%s", State.X));
+                inlineKeyboardButton6 = keyboardButtonsRow2.get(2).setText(String.format("%s", State.X));
 
                 break;
             case 7:
@@ -147,11 +146,12 @@ public class Bot extends TelegramLongPollingBot {
 
                 break;
         }
-        p1Turn ^= true;
+        //p1Turn ^= true;
+        keyboardButtonsRow2.add(inlineKeyboardButton6);
+        rowList.add(keyboardButtonsRow2);
+        inlineKeyboardMarkup.setKeyboard(rowList);
+        return new SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup);
     }
-
-}
-
 
     @Override
     public String getBotUsername() {
