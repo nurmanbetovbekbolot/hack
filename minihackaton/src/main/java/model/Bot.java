@@ -3,17 +3,11 @@ package model;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
-import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 
 
@@ -93,8 +87,7 @@ public class Bot extends TelegramLongPollingBot {
                     }
                 }
             }
-        }
-        else if (update.hasCallbackQuery()){
+        } else if (update.hasCallbackQuery()) {
             if (update.getCallbackQuery().getData() != null) {
                 buttonRes = Integer.parseInt(update.getCallbackQuery().getData());
                 try {
@@ -112,32 +105,49 @@ public class Bot extends TelegramLongPollingBot {
 
         State m;    // holds move type being added
 
-        if(flag)
-        m = State.X;
+        if (flag)
+            m = State.X;
         else
-                m = State.O;
+            m = State.O;
 
         // sets move
         switch (move) {
             case 1:
             case 2:
             case 3:
-                keyboardButtonsRow1.get(move-1).setText(String.format("%s", m));
+                keyboardButtonsRow1.get(move - 1).setText(String.format("%s", m));
                 break;
             case 4:
             case 5:
             case 6:
-                keyboardButtonsRow2.get(move-3-1).setText(String.format("%s", m));
+                keyboardButtonsRow2.get(move - 3 - 1).setText(String.format("%s", m));
                 break;
             case 7:
             case 8:
             case 9:
-                keyboardButtonsRow3.get(move-6-1).setText(String.format("%s", m));
+                keyboardButtonsRow3.get(move - 6 - 1).setText(String.format("%s", m));
 
                 break;
         }
-        flag=!flag;
-        return new SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup);
+        flag = !flag;
+            if (checkWin(State.X)) {
+                System.out.println("asd");
+        }
+            return new SendMessage().setChatId(chatId).setText("Пример").setReplyMarkup(inlineKeyboardMarkup);
+    }
+
+    static boolean checkWin(State state) {
+        for (int i = 0; i < rowList.size(); i++) {
+            for (int j = 0; j < rowList.size(); j++) {
+                if (rowList.get(i).get(j).getText().equals(String.format("%s", state)) || (rowList.get(j).get(i).getText().equals(String.format("%s", state))))
+                    return true;
+            }
+        }
+        if (rowList.get(0).get(0).getText().equals(String.format("%s", state)) && (rowList.get(1).get(1).getText().equals(String.format("%s", state)))
+                && rowList.get(2).get(2).getText().equals(String.format("%s", state)) || ((rowList.get(2).get(0).getText().equals(String.format("%s", state))) && (rowList.get(1).get(1).getText().equals(String.format("%s", state)))
+                && rowList.get(0).get(2).getText().equals(String.format("%s", state))))
+            return true;
+        return false;
     }
 
     @Override
